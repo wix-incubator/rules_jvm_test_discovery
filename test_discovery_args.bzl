@@ -51,6 +51,6 @@ test_discovery_args = rule(
     },
     outputs = {
         "discovery_args" : "%{name}_test_discovery_args"
-    }
+    },
     implementation = _test_discovery_args_impl,
 )
