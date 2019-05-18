@@ -1,4 +1,4 @@
-package io.bazel.rulesscala.test_discovery
+package com.wix.rulesjvm.test_discovery
 
 import java.io.File
 import java.io.FileInputStream
@@ -54,7 +54,7 @@ object PrefixSuffixTestDiscoveringSuite {
     properties
   }
 
-  private[rulesscala] def discoverClasses(): Array[Class[_]] = {
+  private[rulesjvm] def discoverClasses(): Array[Class[_]] = {
 
     val archives = archivesPath.split(',')
     val classes = archives.flatMap(discoverClassesIn)

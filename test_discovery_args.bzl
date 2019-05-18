@@ -29,6 +29,7 @@ bazel.discover.classes.print.discovered={print_discovered}
 
 
 def _test_discovery_args_impl(ctx):
+    #TODO check that either prefixes or suffixes is supplied
     archives = _get_test_archive_jars(ctx, ctx.attr.tests_from)
 
     serialized_archives = _serialize_archives_short_path(archives)
@@ -38,6 +39,9 @@ def _test_discovery_args_impl(ctx):
         serialized_archives,
     )
     ctx.actions.write(ctx.outputs.discovery_args, test_suite)
+    return DefaultInfo(
+      runfiles=ctx.runfiles(files=[ctx.outputs.discovery_args])
+    )
 
 test_discovery_args = rule(
     attrs = {

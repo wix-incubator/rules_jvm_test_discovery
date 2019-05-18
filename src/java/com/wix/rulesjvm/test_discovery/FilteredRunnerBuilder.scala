@@ -1,10 +1,10 @@
-package io.bazel.rulesscala.test_discovery
+package com.wix.rulesjvm.test_discovery
 
 import java.lang.annotation.Annotation
 import java.util
 import java.util.regex.Pattern
 
-import io.bazel.rulesscala.test_discovery.FilteredRunnerBuilder.FilteringRunnerBuilder
+import com.wix.rulesjvm.test_discovery.FilteredRunnerBuilder.FilteringRunnerBuilder
 import org.junit.Test
 import org.junit.runner.Runner
 import org.junit.runners.BlockJUnit4ClassRunner
@@ -28,7 +28,7 @@ class FilteredRunnerBuilder(builder: RunnerBuilder, filteringRunnerBuilder: Filt
   }
 }
 
-private[rulesscala] class FilteredTestClass(testClass: Class[_], pattern: Pattern) extends TestClass(testClass) {
+private[rulesjvm] class FilteredTestClass(testClass: Class[_], pattern: Pattern) extends TestClass(testClass) {
   override def getAnnotatedMethods(aClass: Class[_ <: Annotation]): util.List[FrameworkMethod] = {
     val methods = super.getAnnotatedMethods(aClass)
     if (aClass == classOf[Test]) methods.filter(method => methodMatchesPattern(method, pattern))

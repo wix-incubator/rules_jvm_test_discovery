@@ -12,3 +12,9 @@ scala_library(
     visibility = ["//visibility:public"],
     deps = ["//external:io_bazel_rules_scala/dependency/junit/junit"],
 )
+
+java_import(
+    name = "bazel_test_runner_deploy",
+    jars = ["@bazel_tools//tools/jdk:TestRunner_deploy.jar"],
+    visibility = ["//visibility:public"],
+)
