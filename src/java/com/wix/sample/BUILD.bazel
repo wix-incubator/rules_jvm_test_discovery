@@ -1,0 +1,9 @@
+load("//:java_test_discovery.bzl", "java_test_discovery")
+
+java_test_discovery(
+    name = "SimpleTest",
+    size = "small",
+    srcs = ["SimpleTest.java"],
+    print_discovered_classes = True,
+    suffixes = ["Test"],
+)
