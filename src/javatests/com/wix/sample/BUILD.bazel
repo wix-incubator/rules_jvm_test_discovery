@@ -3,7 +3,7 @@ load("//:java_test_discovery.bzl", "java_test_discovery")
 java_library(
     name = "SomeSimpleTest_Source",
     srcs = ["SimpleTest.java"],
-    deps = ["//external:io_bazel_rules_scala/dependency/junit/junit"],
+    deps = ["@junit_junit"],
 )
 java_test_discovery(
     name = "SomeSimpleTest",
