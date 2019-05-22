@@ -14,6 +14,7 @@ def java_test_discovery(name,
         suffixes = suffixes,
         print_discovered_classes = print_discovered_classes,
         tests_from = tests_from,
+        testonly = 1,
     )
 
     user_jvm_flags = kwargs.pop("jvm_flags", [])
