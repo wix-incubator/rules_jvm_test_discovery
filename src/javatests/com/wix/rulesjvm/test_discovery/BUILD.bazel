@@ -14,7 +14,9 @@ java_library(
     name = "JunitWithDepsTest_Source",
     srcs = ["JunitWithDepsTest.java"],
     runtime_deps = [":JUnitRuntimeDep"],
-    deps = ["@junit_junit","@org_hamcrest_hamcrest_core", ":JUnitCompileTimeDep"],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core",
+            ":JUnitCompileTimeDep"],
 )
 
 java_test_discovery(
@@ -29,7 +31,8 @@ java_test_discovery(
 java_library(
     name = "JunitMultipleSuffixes_Source",
     srcs = ["JunitSuffixE2E.java", "JunitSuffixIT.java"],
-     deps = ["@junit_junit","@org_hamcrest_hamcrest_core"],
+     deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+             "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
 )
 
 java_test_discovery(
@@ -46,7 +49,8 @@ java_test_discovery(
 java_library(
     name = "JunitMultiplePrefixes_Source",
     srcs = ["OtherCustomPrefixJunit.java", "TestJunitCustomPrefix.java"],
-    deps = ["@junit_junit","@org_hamcrest_hamcrest_core"],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
 )
 
 java_test_discovery(
@@ -68,7 +72,8 @@ java_library(
        "JunitSuffixE2E.java",
        "JunitSuffixIT.java"
     ],
-    deps = ["@junit_junit","@org_hamcrest_hamcrest_core"],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
 )
 
 java_test_discovery(

@@ -7,7 +7,7 @@ java_library(
         "PrefixSuffixTestDiscoveringSuite.java"
     ],
     visibility = ["//visibility:public"],
-    deps = ["@junit_junit"],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit"],
 )
 
 java_import(
