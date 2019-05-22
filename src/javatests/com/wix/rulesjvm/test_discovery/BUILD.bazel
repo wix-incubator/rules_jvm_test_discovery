@@ -26,8 +26,6 @@ java_test_discovery(
     suffixes = ["Test"],
 )
 
-
-
 java_library(
     name = "JunitMultipleSuffixes_Source",
     srcs = ["JunitSuffixE2E.java", "JunitSuffixIT.java"],
@@ -45,32 +43,39 @@ java_test_discovery(
     ],
 )
 
-#scala_junit_test(
-#    name = "JunitMultiplePrefixes",
-#    size = "small",
-#    srcs = ["src/main/scala/scalarules/test/junit/JunitMultiplePrefixes.scala"],
-#    prefixes = [
-#        "Test",
-#        "OtherCustomPrefix",
-#    ],
-#    print_discovered_classes = True,
-#)
-#
-#scala_junit_test(
-#    name = "JunitPrefixesAndSuffixes",
-#    size = "small",
-#    srcs = [
-#        "src/main/scala/scalarules/test/junit/JunitMultiplePrefixes.scala",
-#        "src/main/scala/scalarules/test/junit/JunitMultipleSuffixes.scala",
-#    ],
-#    prefixes = ["Test"],
-#    print_discovered_classes = True,
-#    suffixes = ["E2E"],
-#)
-#
-#scala_junit_test(
-#    name = "JunitJavaTest",
-#    size = "small",
-#    srcs = ["src/main/scala/scalarules/test/junit/JunitJavaTest.java"],
-#    suffixes = ["Test"],
-#)
+java_library(
+    name = "JunitMultiplePrefixes_Source",
+    srcs = ["OtherCustomPrefixJunit.java", "TestJunitCustomPrefix.java"],
+    deps = ["@junit_junit","@org_hamcrest_hamcrest_core"],
+)
+
+java_test_discovery(
+    name = "JunitMultiplePrefixes",
+    tests_from = [":JunitMultiplePrefixes_Source"],
+    size = "small",
+    prefixes = [
+        "Test",
+        "OtherCustomPrefix",
+    ],
+    print_discovered_classes = True,
+)
+
+java_library(
+    name = "JunitPrefixesAndSuffixes_Source",
+    srcs = [
+       "OtherCustomPrefixJunit.java",
+       "TestJunitCustomPrefix.java",
+       "JunitSuffixE2E.java",
+       "JunitSuffixIT.java"
+    ],
+    deps = ["@junit_junit","@org_hamcrest_hamcrest_core"],
+)
+
+java_test_discovery(
+    name = "JunitPrefixesAndSuffixes",
+    tests_from = [":JunitPrefixesAndSuffixes_Source"],
+    size = "small",
+    prefixes = ["Test"],
+    print_discovered_classes = True,
+    suffixes = ["E2E"],
+)
