@@ -15,6 +15,30 @@ import java.util.jar.JarInputStream;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The test running and discovery mechanism works in the following manner:
+ *   - Bazel rule executes a JVM application to run tests (currently `JUnitCore`) and asks it to run
+ *     the `DiscoveredTestSuite` suite.
+ *   - When JUnit tries to run it, it uses the `PrefixSuffixTestDiscoveringSuite` runner
+ *     to know what tests exist in the suite.
+ *   - We know which tests to run by examining the entries of the target's archive.
+ *   - The archive's path is passed in a system property ("bazel.discover.classes.archive.file.path").
+ *   - The entries of the archive are filtered to keep only classes
+ *   - Of those we filter again and keep only those which match either of the prefixes/suffixes supplied.
+ *   - Prefixes are supplied as a comma separated list. System property ("bazel.discover.classes.prefixes")
+ *   - Suffixes are supplied as a comma separated list. System property ("bazel.discover.classes.prefixes")
+ *   - We iterate over the remaining entries and format them into classes.
+ *   - At this point we tell JUnit (via the `RunnerBuilder`) what are the discovered test classes.
+ *   - W.R.T. discovery semantics this is similar to how maven surefire/failsafe plugins work.
+ *   - For debugging purposes one can ask to print the list of discovered classes.
+ *   - This is done via an `print_discovered_classes` attribute.
+ *   - The attribute is sent via "bazel.discover.classes.print.discovered"
+ *
+ * Additional references:
+ *   - http://junit.org/junit4/javadoc/4.12/org/junit/runner/RunWith.html
+ *   - http://junit.org/junit4/javadoc/4.12/org/junit/runners/model/RunnerBuilder.html
+ *   - http://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html
+ */
 @RunWith(PrefixSuffixTestDiscoveringSuite.class)
 class DiscoveredTestSuite {
 }
