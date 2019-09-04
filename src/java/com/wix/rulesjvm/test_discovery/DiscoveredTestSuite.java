@@ -25,7 +25,7 @@ class PrefixSuffixTestDiscoveringSuiteObject {
     Class<?>[] classes = Arrays.stream(archives).flatMap(this::discoverClassesIn).toArray(Class<?>[]::new);
     if (classes.length == 0)
       throw new IllegalStateException("Was not able to discover any classes " +
-              "for archives=" + Arrays.stream(archives).collect(Collectors.joining(",")) + ", " +
+              "for archives=" + archivesPath() + ", " +
               "prefixes=" + prefixes() + ", " +
               "suffixes=" + suffixes());
     return classes;
