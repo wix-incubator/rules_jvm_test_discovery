@@ -17,6 +17,8 @@ def _get_test_archive_jars(ctx, test_archives):
     return flattened_list
 
 def _gen_test_suite_args_based_on_prefixes_and_suffixes(ctx, archives):
+    if not ctx.attr.prefixes and not ctx.attr.suffixes:
+        fail("**** MISCONFIGURED TEST_DISCOVERY ****\nExpected at least one test prefix or one test suffix. Have you forgotten to specify 'suffixes' or 'prefixs' argument?\n**************************************")
     return """
 bazel.discover.classes.archives.file.paths={archives}
 bazel.discover.classes.prefixes={prefixes}
