@@ -126,3 +126,21 @@ java_test_discovery(
     prefixes = ["Test"],
     print_discovered_classes = True,
 )
+
+java_library(
+    name = "JunitFiltersClassesWithoutTests_Source",
+    srcs = [
+       "SomeHelperForTest.java",
+       "SingleTestSoTargetWillNotFailDueToNoTestsTest.java",
+    ],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
+)
+
+java_test_discovery(
+    name = "JunitFiltersClassesWithoutTests",
+    tests_from = [":JunitFiltersClassesWithoutTests_Source"],
+    size = "small",
+    print_discovered_classes = True,
+    suffixes = ["Test"],
+)
