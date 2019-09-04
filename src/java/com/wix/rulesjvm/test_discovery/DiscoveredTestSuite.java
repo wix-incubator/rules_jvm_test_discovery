@@ -172,11 +172,8 @@ class PrefixSuffixTestDiscoveringSuiteObject {
     }
   }
 
-
-
-
   private String archivesPath() {
-    return testDiscoveryArgs.getProperty("bazel.discover.classes.archives.file.paths"); //this is set by scala_junit_test rule in scala.bzl
+    return testDiscoveryArgs.getProperty("bazel.discover.classes.archives.file.paths"); //this is set by test_discovery_args rule in test_discovery_args.bzl
   }
 
   private java.util.Set<String> suffixesWithClassSuffix() {
