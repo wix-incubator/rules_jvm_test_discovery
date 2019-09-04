@@ -28,23 +28,23 @@ java_test_discovery(
     suffixes = ["Test"],
 )
 
-#java_library(
-#    name = "JunitMultipleSuffixes_Source",
-#    srcs = ["JunitSuffixE2E.java", "JunitSuffixIT.java"],
-#     deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
-#             "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
-#)
+java_library(
+    name = "JunitMultipleSuffixes_Source",
+    srcs = ["JunitSuffixE2E.java", "JunitSuffixIT.java"],
+     deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+             "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
+)
 
-#java_test_discovery(
-#    name = "JunitMultipleSuffixes",
-#    tests_from = [":JunitMultipleSuffixes_Source"],
-#    size = "small",
-#    print_discovered_classes = True,
-#    suffixes = [
-#        "E2E",
-#        "IT",
-#    ],
-#)
+java_test_discovery(
+    name = "JunitMultipleSuffixes",
+    tests_from = [":JunitMultipleSuffixes_Source"],
+    size = "small",
+    print_discovered_classes = True,
+    suffixes = [
+        "E2E",
+        "IT",
+    ],
+)
 
 java_library(
     name = "JunitMultiplePrefixes_Source",
