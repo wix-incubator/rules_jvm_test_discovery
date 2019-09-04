@@ -144,3 +144,20 @@ java_test_discovery(
     print_discovered_classes = True,
     suffixes = ["Test"],
 )
+
+java_library(
+    name = "JunitIncludesClassesWithTestsFromParent_Source",
+    srcs = [
+       "ConcreteImplementationTest.java",
+    ],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
+)
+
+java_test_discovery(
+    name = "JunitIncludesClassesWithTestsFromParent",
+    tests_from = [":JunitIncludesClassesWithTestsFromParent_Source"],
+    size = "small",
+    print_discovered_classes = True,
+    suffixes = ["Test"],
+)
