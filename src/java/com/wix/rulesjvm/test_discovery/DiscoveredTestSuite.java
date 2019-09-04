@@ -31,6 +31,20 @@ class PrefixSuffixTestDiscoveringSuiteObject {
     return classes;
   }
 
+  private Properties testDiscoveryArgs = loadTestDiscoveryArgs();
+
+  private final Properties loadTestDiscoveryArgs() {
+    String testDiscoveryArgsPath = System.getProperty("bazel.discover.classes.args.path");
+    Properties properties = new Properties();
+    try {
+      properties.load(Files.newBufferedReader(Paths.get(testDiscoveryArgsPath)));
+    } catch (IOException e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+    return properties;
+  }
+
   private Stream<Class<?>> discoverClassesIn(String archivePath) {
     JarInputStream archive = archiveInputStream(archivePath);
     Class<?>[] classes = discoverClasses(archive, prefixes(), suffixesWithClassSuffix());
@@ -134,21 +148,11 @@ class PrefixSuffixTestDiscoveringSuiteObject {
     }
   }
 
-  private Properties testDiscoveryArgs() {
-    String testDiscoveryArgsPath = System.getProperty("bazel.discover.classes.args.path");
-    Properties properties = new Properties();
-    try {
-      properties.load(Files.newBufferedReader(Paths.get(testDiscoveryArgsPath)));
-    } catch (IOException e) {
-      e.printStackTrace();
-      throw new RuntimeException(e);
-    }
-    return properties;
-  }
+
 
 
   private String archivesPath() {
-    return testDiscoveryArgs().getProperty("bazel.discover.classes.archives.file.paths"); //this is set by scala_junit_test rule in scala.bzl
+    return testDiscoveryArgs.getProperty("bazel.discover.classes.archives.file.paths"); //this is set by scala_junit_test rule in scala.bzl
   }
 
   private java.util.Set<String> suffixesWithClassSuffix() {
@@ -157,11 +161,11 @@ class PrefixSuffixTestDiscoveringSuiteObject {
   }
 
   private java.util.Set<String> suffixes() {
-    return parseProperty(testDiscoveryArgs().getProperty("bazel.discover.classes.suffixes"));
+    return parseProperty(testDiscoveryArgs.getProperty("bazel.discover.classes.suffixes"));
   }
 
   private Set<String> prefixes() {
-    return parseProperty(testDiscoveryArgs().getProperty("bazel.discover.classes.prefixes"));
+    return parseProperty(testDiscoveryArgs.getProperty("bazel.discover.classes.prefixes"));
   }
 
   private Set<String> parseProperty(String potentiallyEmpty) {
@@ -173,7 +177,7 @@ class PrefixSuffixTestDiscoveringSuiteObject {
   }
 
   private Boolean printDiscoveredClasses() {
-    return Boolean.valueOf(testDiscoveryArgs().getProperty("bazel.discover.classes.print.discovered"));
+    return Boolean.valueOf(testDiscoveryArgs.getProperty("bazel.discover.classes.print.discovered"));
   }
 
   private Boolean concreteClasses(Class<?> testClass) {
