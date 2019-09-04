@@ -109,3 +109,20 @@ java_test_discovery(
     print_discovered_classes = True,
     suffixes = ["Test"],
 )
+
+java_library(
+    name = "JunitFiltersInnerClasses_Source",
+    srcs = [
+       "TestJunitInnerClass.java",
+    ],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit",
+            "//external:rules_jvm_test_discovery/dependency/hamcrest/hamcrest_core"],
+)
+
+java_test_discovery(
+    name = "JunitFiltersInnerClasses",
+    tests_from = [":JunitFiltersInnerClasses_Source"],
+    size = "small",
+    prefixes = ["Test"],
+    print_discovered_classes = True,
+)
