@@ -2,8 +2,8 @@ java_library(
     name = "test_discovery",
     srcs = [
         "DiscoveredTestSuite.java",
+        "FilteredRunner.java",
         "FilteredRunnerBuilder.java",
-        "FilteredRunnerBuilderImpl.java",
         "PrefixSuffixTestDiscoveringSuite.java"
     ],
     visibility = ["//visibility:public"],
