@@ -1,10 +1,10 @@
 load("@rules_jvm_test_discovery//:test_discovery_args.bzl", "test_discovery_args")
 
 def java_test_discovery(name, 
-    prefixes, 
-    suffixes, 
-    print_discovered_classes, 
     tests_from,
+    suffixes = None,
+    prefixes = None, 
+    print_discovered_classes = False, 
     **kwargs):
 
     discovery_name = "%s-discovery-args" % name
@@ -14,6 +14,7 @@ def java_test_discovery(name,
         suffixes = suffixes,
         print_discovered_classes = print_discovered_classes,
         tests_from = tests_from,
+        testonly = 1,
     )
 
     user_jvm_flags = kwargs.pop("jvm_flags", [])
@@ -28,6 +29,9 @@ def java_test_discovery(name,
             "-Dbazel.discover.classes.args.path=$(location :%s)" % discovery_name,
         ],
         data = user_data + [":" + discovery_name],
-        runtime_deps = user_runtime_deps + tests_from + suite_label,
+        runtime_deps = user_runtime_deps + tests_from + [suite_label,
+                                                         "@rules_jvm_test_discovery//src/java/com/wix/rulesjvm/test_discovery:bazel_test_runner_deploy"],
+        use_testrunner = False,
+        main_class = "com.google.testing.junit.runner.BazelTestRunner",
         **kwargs
     )

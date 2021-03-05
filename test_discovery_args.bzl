@@ -17,6 +17,8 @@ def _get_test_archive_jars(ctx, test_archives):
     return flattened_list
 
 def _gen_test_suite_args_based_on_prefixes_and_suffixes(ctx, archives):
+    if not ctx.attr.prefixes and not ctx.attr.suffixes:
+        fail("**** MISCONFIGURED TEST_DISCOVERY ****\nExpected at least one test prefix or one test suffix. Have you forgotten to specify 'suffixes' or 'prefixs' argument?\n**************************************")
     return """
 bazel.discover.classes.archives.file.paths={archives}
 bazel.discover.classes.prefixes={prefixes}
@@ -29,6 +31,7 @@ bazel.discover.classes.print.discovered={print_discovered}
 
 
 def _test_discovery_args_impl(ctx):
+    #TODO check that either prefixes or suffixes is supplied
     archives = _get_test_archive_jars(ctx, ctx.attr.tests_from)
 
     serialized_archives = _serialize_archives_short_path(archives)
@@ -38,6 +41,9 @@ def _test_discovery_args_impl(ctx):
         serialized_archives,
     )
     ctx.actions.write(ctx.outputs.discovery_args, test_suite)
+    return DefaultInfo(
+      runfiles=ctx.runfiles(files=[ctx.outputs.discovery_args])
+    )
 
 test_discovery_args = rule(
     attrs = {
@@ -51,6 +57,6 @@ test_discovery_args = rule(
     },
     outputs = {
         "discovery_args" : "%{name}_test_discovery_args"
-    }
+    },
     implementation = _test_discovery_args_impl,
 )

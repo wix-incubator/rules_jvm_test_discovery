@@ -1,0 +1,18 @@
+java_library(
+    name = "test_discovery",
+    srcs = [
+        "DiscoveredTestSuite.java",
+        "FilteredRunner.java",
+        "FilteredRunnerBuilder.java",
+        "PrefixSuffixTestDiscoveringSuite.java"
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["//external:rules_jvm_test_discovery/dependency/junit/junit"],
+)
+
+# TestRunner_deploy.jar has to be wrapped inside a JavaInfo provider so it can be a dependency of `java_test`
+java_import(
+    name = "bazel_test_runner_deploy",
+    jars = ["@bazel_tools//tools/jdk:TestRunner_deploy.jar"],
+    visibility = ["//visibility:public"],
+)
